@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+     <!-- Font Awesome CDN -->
+     <script src="https://kit.fontawesome.com/7297a7166d.js" crossorigin="anonymous"></script>
+    <title>Chain Reaction</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        input,select,p{
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            font-family: 'Inter',sans-serif;
+            font-optical-sizing: auto;
+            font-variation-settings: "slnt" 0;
+            background-color: #e9e9e9;
+        }
+
+        #Container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        #menuPanel{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            background-color: #310e32;
+            background: linear-gradient(180deg, #112644 0%, #310e32 100%);
+            font-size: 14px;
+            color: #ffffff;
+            min-height: calc(100vh);
+            padding: 0 24px;
+            border-right: 2px solid white;
+            box-shadow: 0px 0px 5px #222222;
+            gap: 7px;
+            box-sizing: border-box;
+        }
+
+        select,input{
+            background-color: #FFFEF9;
+            outline: none;
+            border: none;
+            width: 220px;
+        }
+
+        button{
+            padding: 6px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer ;
+            text-align:center;
+        }
+
+        .fa-circle-xmark{
+            font-size: 24px;
+            align-self: flex-end;
+            cursor: pointer;
+            visibility: hidden;
+        }
+
+        #logo{
+            font-size: 26px;
+            font-weight: 900;
+            text-shadow: 0px 0px 20px black;
+            text-align: center;
+        }
+
+        #topComboBoxContainer{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .comboBox{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .comboLabel{
+            font-size: 16px;
+        }
+
+        .comboBox input, .comboBox select{
+            padding:6px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        #startBtn{
+            background-color: #FFF5C3;
+        }
+
+        .inputBox{
+            font-size: 12px;
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin:8px 0;
+            align-items: center;
+        }
+
+        .inputBox input{
+            font-size: 12px;
+            padding: 6px;
+            border-radius: 2px;
+            width: 120px;
+        }
+
+        #circleContainer{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-self: center;
+            gap: 6px;
+        }
+
+        .circle{
+            height: 16px;
+            width: 16px;
+            border-radius: 30%;
+            background-color: red;
+            border: 1px solid white;
+        }
+
+        .red {
+            background-color: #f63636;
+        }
+        
+        .green {
+            background-color: #A2F636;
+        }
+        
+        .blue {
+            background-color: #369af6;
+        }
+        
+        .pink {
+            background-color: #f63687;
+        }
+        
+        .yellow {
+            background-color: #f6c136;
+        }
+        
+        .purple {
+            background-color: #7436f6;
+        }
+        
+        .orange {
+            background-color: #ff4d00;
+        }
+        
+        .white {
+            background-color: #d4d4d4;
+        }
+
+        #gamePanel{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            display: none;
+            min-height: 100vh;
+        }
+
+        #gameTitleBox{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+            gap: 36px;
+            align-items: center;
+        }
+
+        #gameTitleBox i{
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #gameTitleBox p{
+            font-size: 26px;
+            font-weight: 900;
+            text-shadow: 0px 0px 4px black;
+            text-align: center;
+            color: white;
+        }
+
+        #bottomBox{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        #status{
+            color: #053873;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        #buttonBox{
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+        }
+
+        #buttonBox button{
+            background-color: #261637;
+            color: #e9e9e9;
+            padding: 6px 24px;
+        }
+
+        #gameBox{
+            display: grid;
+            height: 75%;
+            width: 75%;
+            gap: 0; 
+            margin: 24px;
+        }
+
+        .box{
+            background-color: rgba(255, 254, 249, 0.511);
+            border: 0.5px solid #888888;
+            height: auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1px;
+            padding: 2px;
+        }
+
+        #showBtn{
+            display: none;
+        }
+
+       .ball{
+            width: 30%;
+            height: 30%;
+            border-radius: 100%;
+            animation: rotation 1s infinite ease-in-out;
+       }
+
+       @keyframes rotation {
+            from{
+                transform: rotate3d(0,1,1,0deg);
+            }
+
+            to{
+                transform: rotate3d(0,1,1,36deg);
+            }
+       }   
+
+       h1{
+        display: none;
+        font-weight: bold;
+        text-align: center;
+        color: #261637;
+       }
+
+       @media screen and (min-width:300px) and (max-width:760px) {
+        #Container{
+            display: none;
+        }
+
+        h1{
+            display: block;
+        }
+
+       }
+
+    </style>
+</head>
+<body>
+    <h1>Please Open the game in Bigger Screen</h1>
+    <div id="Container">
+        <div id="menuPanel">
+            <i class="fa-solid fa-circle-xmark" id="closeBtn"></i>
+            <p id="logo">Chain Reaction</p>
+            <div id="topComboBoxContainer">
+                <div class="comboBox">
+                    <p class="comboLabel">No. Of Players</p>
+                    <select id="playerCombo">
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                    </select>
+                </div>
+                <div class="comboBox">
+                    <p class="comboLabel">Grid Size</p>
+                    <input type="number" min="6" id="gridIn" value="6" max="12" />
+                </div>
+            </div>
+            <button id="startBtn">Start</button>
+            <div id="nameBox">
+                <div class="inputBox">
+                    <p>Player 1</p>
+                    <input type="text" value="Player 1" >
+                </div>
+                <div class="inputBox">
+                    <p>Player 2</p>
+                    <input type="text" value="Player 2" >
+                </div>
+                <div class="inputBox">
+                    <p>Player 3</p>
+                    <input type="text" value="Player 3" >
+                </div>
+                <div class="inputBox">
+                    <p>Player 4</p>
+                    <input type="text" value="Player 4" >
+                </div>
+                <div class="inputBox">
+                    <p>Player 5</p>
+                    <input type="text" value="Player 5" >
+                </div>
+                <div class="inputBox">
+                    <p>Player 6</p>
+                    <input type="text" value="Player 6" >
+                </div>
+                <div class="inputBox">
+                    <p>Player 7</p>
+                    <input type="text" value="Player 7" >
+                </div>
+                <div class="inputBox">
+                    <p>Player 8</p>
+                    <input type="text" value="Player 8" >
+                </div>
+            </div>
+            <div id="circleContainer">
+                <div class="circle red"></div>
+                <div class="circle green"></div>
+                <div class="circle blue"></div>
+                <div class="circle pink"></div>
+                <div class="circle yellow"></div>
+                <div class="circle purple"></div>
+                <div class="circle orange"></div>
+                <div class="circle white"></div>
+            </div>
+        </div>
+        <div id="gamePanel">
+            <div id="gameTitleBox">
+                <i class="fa-solid fa-bars" id="showBtn"></i>
+                <p id="gameInfo">Game Starts</p>
+            </div>
+            <div id="gameBox"></div>
+            <div id="bottomBox">
+                <p id="status">Turn: Player 1</p>
+                <div id="buttonBox">
+                    <button id="undoBtn">Undo</button>
+                    <button id="resetBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+       document.getElementById("startBtn").addEventListener("click",()=>{
+            
+            let n;
+            try{
+                n = parseInt(document.getElementById("gridIn").value);
+            }catch(e){
+                n = 0;
+            }
+            
+            document.getElementById("gameBox").innerHTML = "";
+            for(let i = 0;i<n*n;i++) document.getElementById("gameBox").innerHTML+= "<div class='box'></div>";
+
+            document.getElementById("gameBox").style.gridTemplateColumns = `repeat(${n},1fr)`;
+            document.getElementById("gameBox").style.gridTemplateRows = `repeat(${n},1fr)`;
+            document.getElementById("gamePanel").style.display = "flex";
+            document.getElementById("closeBtn").style.visibility = "visible";
+            
+            let inputArray = document.getElementById("nameBox").querySelectorAll("input");
+            let player_name = new Array(8).fill(null);
+            for(let i = 0; i<8;i++)player_name[i] = inputArray[i].value;
+            
+            let boxArray = document.querySelectorAll(".box"); 
+            let countArray = new Array(n*n).fill(0);
+            let HolderArray = new Array(n*n).fill(null);
+            let undoCount =  new Array(n*n);
+            let undoHolder = new Array(n*n);
+            let undoPlayer = new Array(8);
+            let positionArray = new Array(n*n).fill(2);
+            let blastVals = [1, 2, 3];
+            let color_name = ["#f63636","#A2F636","#369af6","#f63687","#f6c136","#7436f6","#ff4d00","#d4d4d4"];
+            let playerEligible = new Array(8).fill(1);
+            var turn = 0;
+            var count_click = 0;
+            var freeze = 0;
+            let number_of_player = document.getElementById("playerCombo").value;
+            let lastStatus;
+            let lastTurn;
+            let statusBtn = document.getElementById("status");
+            let Info = document.getElementById("gameInfo");
+
+            let box_clicked = (index) => {
+                
+                HolderArray[index] = player_name[turn];
+                if (blastVals[positionArray[index]] > countArray[index]) {
+                    countArray[index]++;
+                } else {
+                    countArray[index] = 0;
+                    HolderArray[index] = null;
+
+                    if(positionArray[index] == 2){
+                        box_clicked(index-1);
+                        box_clicked(index+1);
+                        box_clicked(index+n);
+                        box_clicked(index-n);
+                    }else if(positionArray[index] == 1){
+                        if((index>0 && index<n-1) || (index<(n*n-1) && index >(n*n-n))){
+                            box_clicked(index-1);
+                            box_clicked(index+1);
+                            if(index+n > positionArray.length-1){
+                                box_clicked(index-n);
+                            }else{
+                                box_clicked(index+n);
+                            }
+                        }else{
+                            box_clicked(index+n);
+                            box_clicked(index-n);
+                            if(index%n == 0){
+                                box_clicked(index+1);
+                            }else{
+                                box_clicked(index-1);
+                            }
+                        }
+                    }else{
+                        if(index == 0){
+                            box_clicked(index+1);
+                            box_clicked(index+n);
+                        }else if(index == n-1){
+                            box_clicked(index-1);
+                            box_clicked(index+n);
+                        }else if(index == (n*n-1)){
+                            box_clicked(index-1);
+                            box_clicked(index-n);
+                        }else if(index == (n*n-n)){
+                            box_clicked(index+1);
+                            box_clicked(index-n);
+                        }
+                    }
+                }
+            };
+
+            let changeturn = () => {
+                turn = (turn+1) % number_of_player;
+                if(playerEligible[turn] != 1){
+                    changeturn();
+                }
+                statusBtn.innerHTML = "Turn: " + player_name[turn];
+                boxArray.forEach((box)=>{
+                    let color = color_name[turn];
+                    box.style.border = `0.5px Solid ${color}`;
+                });
+            };
+
+
+            let checkLoser = ()=>{
+                if(count_click>number_of_player){
+                    for(let player of player_name){
+                        if(HolderArray.indexOf(player) == -1 && playerEligible[player_name.indexOf(player)] == 1){
+                            alert(`${player} has lost the Game`);
+                            playerEligible[player_name.indexOf(player)] = 0;
+                        }
+                    }
+                }
+            };
+
+            let checkWinner = () => {
+                for (let holder of HolderArray) {
+                    if (holder != player_name[turn] && holder != null) {
+                        return 0;
+                    }
+                }
+                return 1;
+            };
+
+            let displayVals = () => {
+                boxArray.forEach((box, index) => {
+                    let count = countArray[index];
+                    let color = color_name[player_name.indexOf(HolderArray[index])];
+                    if (count != 0 && color != null) {
+                        box.innerHTML = "";
+                        for(let i = 0 ; i<count;i++){
+                            box.innerHTML += `<div class="ball" style = "background-color:${color}"></div>`;
+                        }
+                    } else {
+                        box.innerHTML = ''; 
+                    }
+                });
+            };
+
+            let reset = () =>{
+                countArray.fill(0);
+                HolderArray.fill(null);
+                count_click = 0 ;
+                turn = 0;
+                displayVals();
+                statusBtn.innerHTML = "Turn: " + player_name[turn];
+                boxArray.forEach((box)=>{
+                    let color = color_name[turn];
+                    box.style.border = `0.5px Solid ${color}`;
+                });
+                Info.innerHTML = "Game Starts";
+                playerEligible.fill(1);
+                define_eligibility();
+                freeze = 0;
+            }
+
+            let undo = () =>{
+                countArray = undoCount.slice();
+                HolderArray = undoHolder.slice();
+                playerEligible = undoPlayer.slice();
+                Info.innerHTML = lastStatus;
+                turn = lastTurn;
+                count_click--;
+                displayVals();
+                statusBtn.innerHTML = "Turn: " + player_name[turn];
+                boxArray.forEach((box)=>{
+                    let color = color_name[turn];
+                    box.style.border = `0.5px Solid ${color}`;
+                });
+                if(freeze == 1){
+                    freeze = 0;
+                }
+            }
+
+            function define_eligibility(){
+                for(let i = number_of_player; i<8;i++){
+                    playerEligible[i] = 0;
+                }
+            }
+
+            function define_positions() {
+                positionArray[0] = 0;
+                positionArray[n - 1] = 0;
+                positionArray[n * n - 1] = 0;
+                positionArray[n * n - n] = 0;
+
+                for (let i = 1; i < n - 1; i++) {
+                    positionArray[i] = 1;
+                    positionArray[n * i] = 1;
+                    positionArray[(n * (i + 1) - 1)] = 1;
+                    positionArray[(n * n - n + i)] = 1;
+                }
+            }
+
+            reset();
+            define_positions();
+            define_eligibility();
+
+            boxArray.forEach((box, index) => {
+                box.addEventListener("click", () => {
+                    let currentHolder = HolderArray[index];
+                    if ((currentHolder === null || currentHolder === player_name[turn]) && freeze == 0 ) {
+                        undoHolder = HolderArray.slice();
+                        undoCount = countArray.slice();
+                        undoPlayer = playerEligible.slice();
+                        lastStatus = Info.innerHTML;
+                        lastTurn = turn;
+                        count_click++;
+                        box_clicked(index);
+                        displayVals();
+                        checkLoser();
+                        if(checkWinner() == 1 && count_click > number_of_player){
+                            Info.innerHTML= "Game Over"; 
+                            alert(`Player ${turn + 1} won the game`);
+                            freeze = 1;
+                        }else{
+                            changeturn();
+                        }
+                    }
+                });
+            });
+
+            document.getElementById("undoBtn").addEventListener("click",()=>{
+                undo();
+            });
+
+            document.getElementById("resetBtn").addEventListener("click",()=>{
+                reset();
+            });            
+       });
+
+        document.getElementById("closeBtn").addEventListener("click",()=>{
+            document.getElementById("menuPanel").style.display = "none";
+            document.getElementById("showBtn").style.display = "block";
+        });
+
+        document.getElementById("showBtn").addEventListener("click",()=>{
+            document.getElementById("menuPanel").style.display = "flex";
+            document.getElementById("showBtn").style.display = "none";
+        });
+
+        
+
+    </script>
+</body>
+</html>
